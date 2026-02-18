@@ -1,0 +1,120 @@
+﻿git : remote: error: 
+GH013: Repository rule 
+violations found for 
+refs/heads/fix-push-test. 
+       
+Au caractère Ligne:1 : 1
++ git push origin 
+main:fix-push-test 2>&1 | 
+Out-File push_error.txt 
+-En ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (r  
+  emote: error: ...h-te   
+ st.        :String) [    
+], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+remote: 
+remote: - GITHUB PUSH 
+PROTECTION        
+remote:   ÔÇöÔÇöÔÇöÔÇöÔÇöÔ
+ÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇö
+ÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇ
+öÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔ
+ÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇö
+ÔÇö        
+remote:     Resolve the 
+following violations 
+before pushing again      
+  
+remote: 
+remote:     - Push cannot 
+contain secrets        
+remote: 
+remote:             
+remote:      (?) Learn 
+how to resolve a blocked 
+push        
+remote:      https://docs.
+github.com/code-security/s
+ecret-scanning/working-wit
+h-secret-scanning-and-push
+-protection/working-with-p
+ush-protection-from-the-co
+mmand-line#resolving-a-blo
+cked-push        
+remote:             
+remote:             
+remote:       ÔÇöÔÇö 
+Mapbox Secret Access 
+Token ÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇ
+öÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔ
+ÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇöÔÇö
+        
+remote:        locations: 
+       
+remote:          - 
+commit: 6903d8be5ef4de713a
+e2c1a5c370416688b37c00    
+    
+remote:            path: r
+esources/views/dashboard.b
+lade.php:630        
+remote:          - 
+commit: 6903d8be5ef4de713a
+e2c1a5c370416688b37c00    
+    
+remote:            path: r
+esources/views/farms/edit.
+blade.php:215        
+remote:          - 
+commit: 6903d8be5ef4de713a
+e2c1a5c370416688b37c00    
+    
+remote:            path: r
+esources/views/farms/show.
+blade.php:210        
+remote:          - 
+commit: 6903d8be5ef4de713a
+e2c1a5c370416688b37c00    
+    
+remote:            path: r
+esources/views/field_visit
+s/edit.blade.php:161      
+  
+remote:          - 
+commit: 6903d8be5ef4de713a
+e2c1a5c370416688b37c00    
+    
+remote:            path: r
+esources/views/fields/edit
+.blade.php:155        
+remote:             
+remote:        (?) To 
+push, remove secret from 
+commit(s) or follow this 
+URL to allow the secret.  
+      
+remote:        https://git
+hub.com/lupete3/yetuu/secu
+rity/secret-scanning/unblo
+ck-secret/39rEcubSRW2EmX0q
+oYktOM2IITh        
+remote:             
+remote: 
+remote: 
+To https://github.com/lupe
+te3/yetuu.git
+ ! [remote rejected] main 
+-> fix-push-test (push 
+declined due to 
+repository rule 
+violations)
+error: failed to push 
+some refs to 'https://gith
+ub.com/lupete3/yetuu.git'
