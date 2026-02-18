@@ -81,7 +81,7 @@
         <div class="header">
             <!-- Logo de l'entreprise -->
             @if(isset($settings['logo']))
-                <img src="{{ asset('public/logos/'.$settings['logo']) }}" alt="{{ $settings['app_name'] }}">
+                <img src="{{ asset('logos/'.$settings['logo']) }}" alt="{{ $settings['app_name'] }}">
             @else
                 <p style="font-size: 24px; font-weight: bold;">LOGO</p>
             @endif

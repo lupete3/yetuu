@@ -77,7 +77,7 @@
 <div class="container">
     <div class="header">
         @if(isset($settings['logo']))
-            <img src="{{ asset('public/logos/'.$settings['logo']) }}" alt="{{ $settings['app_name'] }}" style="width: 20%;">
+            <img src="{{ asset('logos/'.$settings['logo']) }}" alt="{{ $settings['app_name'] }}" style="width: 20%;">
         @else
             LOGO
         @endif

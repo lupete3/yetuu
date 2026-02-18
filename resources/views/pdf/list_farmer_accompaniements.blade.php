@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,12 +14,15 @@
             padding: 0;
             color: #333;
         }
+
         .container {
             width: 100%;
             margin: 0 auto;
             padding: 0px;
         }
-        .header, .footer {
+
+        .header,
+        .footer {
             text-align: center;
             margin-bottom: 20px;
             padding: 10px;
@@ -26,39 +30,49 @@
             border-top: 2px solid #4CAF50;
             border-bottom: 2px solid #4CAF50;
         }
+
         .header img {
             width: 100px;
             margin-bottom: 10px;
         }
+
         .header h1 {
             margin: 0;
             color: #4CAF50;
             font-size: 20px;
         }
+
         .content {
             margin-bottom: 20px;
         }
+
         .content table {
             width: 100%;
             border-collapse: collapse;
         }
-        .content th, .content td {
+
+        .content th,
+        .content td {
             border: 1px solid #ddd;
             padding: 2px;
             font-size: 6px;
             text-align: left;
         }
+
         .content th {
             background-color: #4CAF50;
             color: #fff;
         }
+
         .content tr:nth-child(even) {
             background-color: #f9f9f9;
         }
+
         .footer p {
             font-size: 12px;
             margin: 5px 0;
         }
+
         .print-button {
             display: inline-block;
             margin-top: 10px;
@@ -70,18 +84,20 @@
             font-size: 14px;
             border-radius: 5px;
         }
+
         .print-button:hover {
             background-color: #45a049;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Header -->
         <div class="header">
             <!-- Logo de l'entreprise -->
             @if(isset($settings['logo']))
-                <img src="{{ asset('public/logos/'.$settings['logo']) }}" alt="{{ $settings['app_name'] }}">
+                <img src="{{ asset('logos/' . $settings['logo']) }}" alt="{{ $settings['app_name'] }}">
             @else
                 <p style="font-size: 24px; font-weight: bold;">LOGO</p>
             @endif
@@ -164,8 +180,10 @@
 
         <!-- Footer -->
         <div class="footer">
-            <p>{{ $settings['phone'] ?? 'Phone' }} | {{ $settings['address'] ?? 'Address' }} | Email: {{ $settings['email'] ?? 'Email' }}</p>
+            <p>{{ $settings['phone'] ?? 'Phone' }} | {{ $settings['address'] ?? 'Address' }} | Email:
+                {{ $settings['email'] ?? 'Email' }}</p>
         </div>
     </div>
 </body>
+
 </html>
