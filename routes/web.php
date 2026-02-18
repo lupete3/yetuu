@@ -47,7 +47,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/', [DashboardController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [DashboardController::class, 'dashboard'])->middleware(['auth', 'verified']);
 
 //Route::post('/weather/fetch', [WeatherController::class, 'fetchWeather'])->name('weather.fetch');
 Route::get('/api/weather', [DashboardController::class, 'getWeather'])->name('api.weather');
@@ -62,16 +62,16 @@ Route::middleware(['super-admin'])->group(function () {
 
     Route::resource('/farmlabours', FarmLabourController::class);
     Route::get('/farmlabours-export-excel', [FarmLabourController::class, 'getfarmlaboursData'])->name('farmlabours.export_excel');
-    Route::get('farmlabours-export-pdf',[FarmLabourController::class, 'print'])->name('farmlabours.print');
+    Route::get('farmlabours-export-pdf', [FarmLabourController::class, 'print'])->name('farmlabours.print');
 
     Route::resource('/farmconversions', FarmConversionController::class);
     Route::get('/farmconversions-export-excel', [FarmConversionController::class, 'getfarmconversionData'])->name('farmconversions.export_excel');
-    Route::get('farmconversions-export-pdf',[FarmConversionController::class, 'print'])->name('farmconversions.print');
+    Route::get('farmconversions-export-pdf', [FarmConversionController::class, 'print'])->name('farmconversions.print');
 
     // Gestion des cultures
     Route::resource('/crop-management', CropManagementController::class);
     Route::get('/crop-management-export-excel', [CropManagementController::class, 'getCropData'])->name('crop-management.export_excel');
-    Route::get('crop-management-export-pdf',[CropManagementController::class, 'print'])->name('crop-management.print');
+    Route::get('crop-management-export-pdf', [CropManagementController::class, 'print'])->name('crop-management.print');
 
     // Gestion des visites de champs
     Route::resource('/field_visits', FieldVisitController::class);
@@ -143,8 +143,8 @@ Route::middleware(['field_staff'])->group(function () {
 
     // Gestion des agriculteurs
     Route::resource('/farmers', FarmerController::class);
-    Route::get('farmer-export-excel',[FarmerController::class, 'getFarmersData'])->name('farmers.export_excel');
-    Route::get('farmer-export-pdf',[FarmerController::class, 'print'])->name('farmers.print');
+    Route::get('farmer-export-excel', [FarmerController::class, 'getFarmersData'])->name('farmers.export_excel');
+    Route::get('farmer-export-pdf', [FarmerController::class, 'print'])->name('farmers.print');
     Route::get('getFarmer/{farmer}', [FarmerController::class, 'getFarmer'])->name('getFarmerById');
     Route::get('getProvinces/{country}', [ProvinceController::class, 'getProvinces'])->name('getProvincesByCountry');
     Route::get('getTerritories/{province}', [TerritoryController::class, 'getTerritories'])->name('getTerritoriesByProvince');
@@ -155,18 +155,18 @@ Route::middleware(['field_staff'])->group(function () {
     Route::get('/farm/maps', [FarmController::class, 'showAllMap'])->name('farms.map');
     Route::post('/farms/{id}/remove-document', [FarmController::class, 'removeDocument'])->name('farms.remove_document');
     Route::get('/farm-export-excel', [FarmController::class, 'getFarmsData'])->name('farms.export_excel');
-    Route::get('farm-export-pdf',[FarmController::class, 'print'])->name('farms.print');
+    Route::get('farm-export-pdf', [FarmController::class, 'print'])->name('farms.print');
 
     // Gestion des champs
     Route::resource('/fields', FieldController::class);
     Route::get('/field/maps', [FieldController::class, 'showAllMap'])->name('fields.map');
     Route::get('/field-export-excel', [FieldController::class, 'getFieldsData'])->name('fields.export_excel');
-    Route::get('field-export-pdf',[FieldController::class, 'print'])->name('fields.print');
+    Route::get('field-export-pdf', [FieldController::class, 'print'])->name('fields.print');
 
     // Gestion des cultures
     Route::resource('/crop-management', CropManagementController::class);
     Route::get('/crop-management-export-excel', [CropManagementController::class, 'getCropData'])->name('crop-management.export_excel');
-    Route::get('crop-management-export-pdf',[CropManagementController::class, 'print'])->name('crop-management.print');
+    Route::get('crop-management-export-pdf', [CropManagementController::class, 'print'])->name('crop-management.print');
 
     // Gestion des visites de champs
     Route::resource('/field_visits', FieldVisitController::class);
@@ -194,9 +194,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Route to 404 page not found
-Route::fallback(function(){
+Route::fallback(function () {
     $viewData['title'] = 'Error 404';
     return view('404')->with('viewData', $viewData);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
