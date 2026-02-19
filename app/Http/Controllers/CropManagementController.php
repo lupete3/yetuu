@@ -18,7 +18,7 @@ class CropManagementController extends Controller
     {
         $viewData = [];
         $viewData['title'] = 'Crops List';
-        $viewData['crops'] = CropManagement::with('farmer')->get();
+        $viewData['crops'] = CropManagement::with('farmer')->paginate(50);
 
         return view('crop_management.index')->with('viewData', $viewData);
     }
@@ -184,7 +184,7 @@ class CropManagementController extends Controller
     {
         $viewData = [];
         $viewData['title'] = 'List of Farm Conversion';
-        $viewData['crop_managements'] = CropManagement::with('farmer')->get();
+        $viewData['crop_managements'] = CropManagement::with('farmer')->paginate(100);
 
         $pdf = Pdf::loadView('pdf.list_crop_management', [
             'crop_managements' => $viewData['crop_managements']

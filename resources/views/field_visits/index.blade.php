@@ -110,6 +110,9 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="mt-4">
+                                    {{ $viewData['field_visits']->links() }}
+                                </div>
                             </div>
                         </div>
 

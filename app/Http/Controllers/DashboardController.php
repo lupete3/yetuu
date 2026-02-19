@@ -87,10 +87,13 @@ class DashboardController extends Controller
         $farmsThisMonth = Farm::whereMonth('created_at', $today->month)->count();
         $fieldVisitThisMonth = FieldVisit::whereMonth('created_at', $today->month)->count();
 
-        $farmers = Farmer::count(); // Retrieve all farmers with their associated farmers
-        $farmersSupport = FarmerAccompaniement::count(); // Retrieve all farmers Support with their associated farmers
-        $farms = Farm::with('farmer')->get(); // Retrieve all farms with their associated farmers
-        $fieldVisits = FieldVisit::all(); // Retrieve all FieldVisits with their associated farmers
+        $farmers = Farmer::count();
+        $farmersSupport = FarmerAccompaniement::count();
+        $farmsCount = Farm::count();
+        $farms = Farm::select('id', 'farm_name', 'gps_location', 'farmer_id', 'total_land_holding')
+            ->with('farmer:id,first_name,last_name')
+            ->get(); // Retrieve only necessary columns for the map
+        $fieldVisitsCount = FieldVisit::count();
 
         $nonSupport = $farmers - $farmersSupport;
 
@@ -156,20 +159,20 @@ class DashboardController extends Controller
 
         foreach (range(1, 12) as $month) {
             $farmersByMonth[] = Farmer::whereYear('created_at', $year)
-                                ->whereMonth('created_at', $month)
-                                ->count();
+                ->whereMonth('created_at', $month)
+                ->count();
 
             $farmsByMonth[] = Farm::whereYear('created_at', $year)
-                                ->whereMonth('created_at', $month)
-                                ->count();
+                ->whereMonth('created_at', $month)
+                ->count();
 
             $fieldVisitsByMonth[] = FieldVisit::whereYear('visit_date', $year)
-                                    ->whereMonth('visit_date', $month)
-                                    ->count();
+                ->whereMonth('visit_date', $month)
+                ->count();
 
             $farmerSupportByMonth[] = FarmerAccompaniement::whereYear('created_at', $year)
-                                    ->whereMonth('created_at', $month)
-                                    ->count();
+                ->whereMonth('created_at', $month)
+                ->count();
         }
 
         // Affichage de la vue

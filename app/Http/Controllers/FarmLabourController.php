@@ -18,7 +18,7 @@ class FarmLabourController extends Controller
     {
         $viewData = [];
         $viewData['title'] = 'List of Farm labours';
-        $viewData['farms_labours'] = FarmLabour::with('farm')->get(); // Retrieve all farm labours with their associated farms
+        $viewData['farms_labours'] = FarmLabour::with('farm')->paginate(50); // Retrieve all farm labours with their associated farms
 
         return view('farm_labours.index')->with('viewData', $viewData);
     }
@@ -109,10 +109,10 @@ class FarmLabourController extends Controller
     {
         $viewData = [];
         $viewData['title'] = 'List of Farm labours';
-        $viewData['farm_labours'] = FarmLabour::with('farm')->get();
+        $viewData['farm_labours'] = FarmLabour::with('farm')->paginate(100);
 
-        $pdf = Pdf::loadView('pdf.list_farm_labours', array('farm_labours' =>  $viewData['farm_labours']))
-        ->setPaper('a4', 'portrait');
+        $pdf = Pdf::loadView('pdf.list_farm_labours', array('farm_labours' => $viewData['farm_labours']))
+            ->setPaper('a4', 'portrait');
 
         return $pdf->stream();
 

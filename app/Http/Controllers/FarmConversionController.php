@@ -18,7 +18,7 @@ class FarmConversionController extends Controller
     {
         $viewData = [];
         $viewData['title'] = 'List of Farm conversion information';
-        $viewData['farms_conversions'] = FarmConversion::with('farm')->get(); // Retrieve all farm conversion info with their associated farms
+        $viewData['farms_conversions'] = FarmConversion::with('farm')->paginate(50); // Retrieve all farm conversion info with their associated farms
 
         return view('farm_conversions.index')->with('viewData', $viewData);
     }
@@ -83,7 +83,7 @@ class FarmConversionController extends Controller
      */
     public function update(Request $request, FarmConversion $farmconversion)
     {
-        
+
         $request->validate([
             'farm_id' => 'required|exists:farms,id',
             'last_date_chemical_applied' => 'nullable|date',
@@ -119,10 +119,10 @@ class FarmConversionController extends Controller
     {
         $viewData = [];
         $viewData['title'] = 'List of Farm conversion';
-        $viewData['farm_conversions'] = FarmConversion::with('farm')->get();
+        $viewData['farm_conversions'] = FarmConversion::with('farm')->paginate(100);
 
-        $pdf = Pdf::loadView('pdf.list_farm_conversions', array('farm_conversions' =>  $viewData['farm_conversions']))
-        ->setPaper('a4', 'portrait');
+        $pdf = Pdf::loadView('pdf.list_farm_conversions', array('farm_conversions' => $viewData['farm_conversions']))
+            ->setPaper('a4', 'portrait');
 
         return $pdf->stream();
 

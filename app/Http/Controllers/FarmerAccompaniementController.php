@@ -40,16 +40,16 @@ class FarmerAccompaniementController extends Controller
         if ($filterSeason) {
             $query->where('season', $filterSeason);
         }
-        if ( $selectedTypeSupport) {
+        if ($selectedTypeSupport) {
             $query->where('accompaniement_id', $selectedTypeSupport);
         }
-        if ( $selectedCountry) {
+        if ($selectedCountry) {
             $query->where('country', $selectedCountry);
         }
 
 
         // Récupérer les données filtrées
-        $viewData['farmerAccompaniements'] = $query->get();
+        $viewData['farmerAccompaniements'] = $query->paginate(50);
         $viewData['accompaniements'] = Accompaniement::all();
         $viewData['countries'] = Country::orderBy('name', 'asc')->get();
 
@@ -261,7 +261,10 @@ class FarmerAccompaniementController extends Controller
 
         // Exporter les données filtrées
         return Excel::download(new FarmerAccompaniementExport(
-            $filterSeason, $selectedYear, $selectedTypeSupport), 'farmer_accompaniements.xlsx');
+            $filterSeason,
+            $selectedYear,
+            $selectedTypeSupport
+        ), 'farmer_accompaniements.xlsx');
     }
 
     /**

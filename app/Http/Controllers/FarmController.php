@@ -7,6 +7,7 @@ use App\Models\Farm;
 use App\Models\Farmer;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -19,7 +20,7 @@ class FarmController extends Controller
     {
         $viewData = [];
         $viewData['title'] = 'List of Farms';
-        $viewData['farms'] = Farm::with('farmer')->get(); // Retrieve all farms with their associated farmers
+        $viewData['farms'] = Farm::with('farmer')->paginate(50); // Use pagination for large datasets
 
         return view('farms.index')->with('viewData', $viewData);
     }
@@ -205,20 +206,21 @@ class FarmController extends Controller
     {
         $farm = Farm::findOrFail($id);
 
-        // Vérifier si la photo existe dans les données
-        $documents = json_decode($farm->documents_upload, true);
-        $documentsToRemove = $request->input('document');
+        if ($farm->documents_upload) {
+            $documents = is_string($farm->documents_upload) ? json_decode($farm->documents_upload, true) : $farm->documents_upload;
+            $documentsToRemove = $request->input('document');
 
-        if (($key = array_search($documentsToRemove, $documents)) !== false) {
-            // Supprimer physiquement la photo
-            Storage::delete('storage/app/public/' . $documentsToRemove);
+            if (($key = array_search($documentsToRemove, $documents)) !== false) {
+                // Supprimer physiquement la photo
+                Storage::disk('public')->delete($documentsToRemove);
 
-            // Retirer la photo de l'array et mettre à jour les données
-            unset($documents[$key]);
-            $farm->photos = json_encode(array_values($documents));
-            $farm->save();
+                // Retirer la photo de l'array et mettre à jour les données
+                unset($documents[$key]);
+                $farm->documents_upload = array_values($documents);
+                $farm->save();
 
-            return response()->json(['success' => true]);
+                return response()->json(['success' => true]);
+            }
         }
 
         return response()->json(['success' => false, 'message' => 'Photo non trouvée.'], 404);
@@ -232,8 +234,8 @@ class FarmController extends Controller
      */
     public function destroy(Farm $farm)
     {
-        if($farm->documents_upload){
-            foreach ($farm->documents_upload as $document){
+        if ($farm->documents_upload) {
+            foreach ($farm->documents_upload as $document) {
                 \Storage::disk('public')->delete($document['path']);
             }
         }
@@ -253,10 +255,10 @@ class FarmController extends Controller
     {
         $viewData = [];
         $viewData['title'] = 'List of Farms';
-        $viewData['farms'] = Farm::with('farmer')->get();
+        $viewData['farms'] = Farm::with('farmer')->paginate(100);
 
-        $pdf = Pdf::loadView('pdf.list_farms', array('farms' =>  $viewData['farms']))
-        ->setPaper('a4', 'landscape');
+        $pdf = Pdf::loadView('pdf.list_farms', array('farms' => $viewData['farms']))
+            ->setPaper('a4', 'landscape');
 
         return $pdf->stream();
 

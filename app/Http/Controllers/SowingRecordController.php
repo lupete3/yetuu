@@ -19,7 +19,7 @@ class SowingRecordController extends Controller
     {
         $viewData = [];
         $viewData['title'] = 'List of Sowing Records';
-        $viewData['sowing_records'] = SowingRecord::with('field', 'crop')->get(); // Retrieve sowing records with associated fields and crops
+        $viewData['sowing_records'] = SowingRecord::with('field', 'crop')->paginate(50); // Retrieve sowing records with associated fields and crops
 
         return view('sowing_records.index')->with('viewData', $viewData);
     }
@@ -57,7 +57,7 @@ class SowingRecordController extends Controller
         // Vérifiez si la décodage est correct et si chaque élément est bien un tableau
         if (is_array($coordinates) && count($coordinates) > 0 && is_array($coordinates[0])) {
             try {
-                $formattedCoordinates = array_map(function($coord) {
+                $formattedCoordinates = array_map(function ($coord) {
                     // Assurez-vous que chaque coordonnée est bien un tableau avec deux éléments (latitude et longitude)
                     if (is_array($coord) && count($coord) == 2) {
                         return implode(' ', $coord);

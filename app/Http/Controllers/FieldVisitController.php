@@ -18,7 +18,7 @@ class FieldVisitController extends Controller
     {
         $viewData = [];
         $viewData['title'] = 'List of Land Visits';
-        $viewData['field_visits'] = FieldVisit::with('field','user')->get(); // Récupère les visites avec les agriculteurs associés
+        $viewData['field_visits'] = FieldVisit::with('field', 'user')->paginate(50); // Récupère les visites avec les agriculteurs associés
 
         return view('field_visits.index')->with('viewData', $viewData);
     }
@@ -31,8 +31,8 @@ class FieldVisitController extends Controller
         $viewData = [];
         $viewData['title'] = 'Add land visit';
         $viewData['fields'] = Field::with('farmer')->get(); // Pour sélectionner un agriculteur lors de la création
-        $viewData['staffs'] = User::all(); 
-        
+        $viewData['staffs'] = User::all();
+
         return view('field_visits.create')->with('viewData', $viewData);
     }
 
@@ -61,7 +61,7 @@ class FieldVisitController extends Controller
 
         // Création de la visite de champ
         $fieldVisit = new FieldVisit();
-        $fieldVisit->field_staff_id = $request->input('field_staff_id'); 
+        $fieldVisit->field_staff_id = $request->input('field_staff_id');
         $fieldVisit->field_id = $request->input('field_id');
         $fieldVisit->visit_date = $request->input('visit_date');
         $fieldVisit->notes = $request->input('notes');
@@ -123,7 +123,7 @@ class FieldVisitController extends Controller
         }
 
         // Mise à jour de la visite de champ
-        $fieldVisit->field_staff_id = $request->input('field_staff_id'); 
+        $fieldVisit->field_staff_id = $request->input('field_staff_id');
         $fieldVisit->field_id = $request->input('field_id');
         $fieldVisit->visit_date = $request->input('visit_date');
         $fieldVisit->notes = $request->input('notes');

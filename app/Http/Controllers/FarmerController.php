@@ -24,7 +24,7 @@ class FarmerController extends Controller
     {
         $viewData = [];
         $viewData['title'] = 'List of Farmers';
-        $viewData['farmers'] = Farmer::with('country','province','territory','groupement')->get(); // Retrieve all farmers
+        $viewData['farmers'] = Farmer::with('country', 'province', 'territory', 'groupement')->paginate(50); // Use pagination for large datasets
 
         return view('farmers.index')->with('viewData', $viewData);
     }
@@ -294,30 +294,31 @@ class FarmerController extends Controller
 
     public function getFarmersData()
     {
-        $farmers = Farmer::with(['country', 'province', 'territory', 'groupement'])->get();
+        // Use cursor for memory efficiency with large datasets
+        $farmers = Farmer::with(['country', 'province', 'territory', 'groupement'])->cursor();
 
-        // Transform data to exclude foreign keys
-        $data = $farmers->map(function($farmer) {
-            switch($farmer->doc_type){
-                case('passport'):
+        $data = [];
+        foreach ($farmers as $farmer) {
+            switch ($farmer->doc_type) {
+                case ('passport'):
                     $doc = 'Passport';
                     break;
-                case('voting_card_id'):
+                case ('voting_card_id'):
                     $doc = 'Voting Card ID';
                     break;
                 default:
                     $doc = 'Driving Lisence';
-                    break ;
+                    break;
             }
-            return [
+            $data[] = [
                 'Farmer ID' => $farmer->farmer_id,
                 'First Name' => $farmer->first_name,
                 'Last Name' => $farmer->last_name,
                 'Date of Birth' => $farmer->date_of_birth,
                 'Gender' => $farmer->gender,
-                'Country' => $farmer->country->name,
-                'State/Province' => $farmer->province->name,
-                'Territory' => $farmer->territory->name,
+                'Country' => $farmer->country->name ?? 'N/A',
+                'State/Province' => $farmer->province->name ?? 'N/A',
+                'Territory' => $farmer->territory->name ?? 'N/A',
                 'Groupement' => $farmer->groupement->name ?? 'N/A',
                 'Village' => $farmer->village,
                 'Operational Site' => $farmer->operational_site,
@@ -337,8 +338,8 @@ class FarmerController extends Controller
                 'Priority Crop' => $farmer->priority_culture ?? 'N/A',
                 'Status' => $farmer->status == 1 ? 'Active' : 'Inactive',
                 'Identity Proof' => $doc,
-             ];
-        });
+            ];
+        }
 
         return Excel::download(new FarmerExport($data), 'farmers.xlsx');
     }
@@ -347,10 +348,10 @@ class FarmerController extends Controller
     {
         $viewData = [];
         $viewData['title'] = 'List of Farmers';
-        $viewData['farmers'] = Farmer::with('country','province','territory')->get(); // Retrieve all farmers
+        $viewData['farmers'] = Farmer::with('country', 'province', 'territory')->paginate(100); // Paginate PDF print as well or limit it
 
-        $pdf = Pdf::loadView('pdf.list_farmers', array('farmers' =>  $viewData['farmers']))
-        ->setPaper('a4', 'landscape');
+        $pdf = Pdf::loadView('pdf.list_farmers', array('farmers' => $viewData['farmers']))
+            ->setPaper('a4', 'landscape');
 
         return $pdf->stream();
 

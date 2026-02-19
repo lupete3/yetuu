@@ -2,116 +2,129 @@
 
 @section('content')
 
-<!-- Main Content -->
-<div class="main-content">
-    <section class="section">
-        <div class="section-header">
-            <h1>{{ $viewData['title'] }}</h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('sowing-records.index') }}">Sowing Records</a></div>
-                <div class="breadcrumb-item">{{ $viewData['title'] }}</div>
-            </div>
-        </div>
-
-        <div class="section-body">
-            <div class="row">
-                <div class="col-12">
-                    @if($errors->any())
-                        @foreach ($errors->all() as $error)
-                            <div class="alert alert-danger alert-dismissible" id="msg" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h6>{{ $error }}</h6>
-                            </div>
-                        @endforeach
-                    @endif
-                    @if(Session::has('success'))
-                        <div class="alert alert-success alert-dismissible" id="msg" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h6>{{ Session::get('success') }}</h6>
-                        </div>
-                    @endif
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>{{ $viewData['title'] }}</h4>
-                            <div class="card-header-action">
-                                <a href="{{ route('sowing-records.create') }}" class="btn btn-icon icon-left btn-success">
-                                    <i class="fas fa-plus"></i> Add Sowing Record
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped" id="table-1">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Field Name</th>
-                                            <th>Crop</th>
-                                            <th>Sowing Date</th>
-                                            <th>Area Sown (ha)</th>
-                                            <th>GPS Coordinates</th>
-                                            <th>Geo Map URL</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($viewData['sowing_records'] as $record)
-                                            <tr>
-                                                <td>{{ $record->id }}</td>
-                                                <td>{{ $record->field->field_name }}</td>
-                                                <td>{{ $record->crop->crop_name }}</td>
-                                                <td>{{ $record->sowing_date }}</td>
-                                                <td>{{ $record->area_sown }}</td>
-                                                <td>
-                                                    @if($record->gps_coordinates)
-                                                        <span class="badge badge-primary">Available</span>
-                                                    @else
-                                                        <span class="badge badge-secondary">Not Available</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($record->geo_map_url)
-                                                        <a href="{{ $record->geo_map_url }}" target="_blank" class="btn btn-sm btn-info">View Map</a>
-                                                    @else
-                                                        <span class="badge badge-secondary">Not Available</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <a href="#" class="dropdown-toggle btn btn-success" data-toggle="dropdown">Action</a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a href="{{ route('sowing-records.show', $record->id) }}" class="dropdown-item has-icon">
-                                                                <i class="far fa-eye text-info"></i> View
-                                                            </a>
-                                                            <a href="{{ route('sowing-records.edit', $record->id) }}" class="dropdown-item has-icon">
-                                                                <i class="far fa-edit text-success"></i> Edit
-                                                            </a>
-
-                                                            <form action="{{ route('sowing-records.destroy', $record->id) }}" method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="dropdown-item has-icon" onclick="return confirm('Are you sure you want to delete this record?');">
-                                                                    <i class="fas fa-trash text-danger"></i> Delete
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
+    <!-- Main Content -->
+    <div class="main-content">
+        <section class="section">
+            <div class="section-header">
+                <h1>{{ $viewData['title'] }}</h1>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
+                    <div class="breadcrumb-item"><a href="{{ route('sowing-records.index') }}">Sowing Records</a></div>
+                    <div class="breadcrumb-item">{{ $viewData['title'] }}</div>
                 </div>
             </div>
-        </div>
-    </section>
-</div>
+
+            <div class="section-body">
+                <div class="row">
+                    <div class="col-12">
+                        @if($errors->any())
+                            @foreach ($errors->all() as $error)
+                                <div class="alert alert-danger alert-dismissible" id="msg" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h6>{{ $error }}</h6>
+                                </div>
+                            @endforeach
+                        @endif
+                        @if(Session::has('success'))
+                            <div class="alert alert-success alert-dismissible" id="msg" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h6>{{ Session::get('success') }}</h6>
+                            </div>
+                        @endif
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>{{ $viewData['title'] }}</h4>
+                                <div class="card-header-action">
+                                    <a href="{{ route('sowing-records.create') }}"
+                                        class="btn btn-icon icon-left btn-success">
+                                        <i class="fas fa-plus"></i> Add Sowing Record
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="table-1">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Field Name</th>
+                                                <th>Crop</th>
+                                                <th>Sowing Date</th>
+                                                <th>Area Sown (ha)</th>
+                                                <th>GPS Coordinates</th>
+                                                <th>Geo Map URL</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($viewData['sowing_records'] as $record)
+                                                <tr>
+                                                    <td>{{ $record->id }}</td>
+                                                    <td>{{ $record->field->field_name }}</td>
+                                                    <td>{{ $record->crop->crop_name }}</td>
+                                                    <td>{{ $record->sowing_date }}</td>
+                                                    <td>{{ $record->area_sown }}</td>
+                                                    <td>
+                                                        @if($record->gps_coordinates)
+                                                            <span class="badge badge-primary">Available</span>
+                                                        @else
+                                                            <span class="badge badge-secondary">Not Available</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($record->geo_map_url)
+                                                            <a href="{{ $record->geo_map_url }}" target="_blank"
+                                                                class="btn btn-sm btn-info">View Map</a>
+                                                        @else
+                                                            <span class="badge badge-secondary">Not Available</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <a href="#" class="dropdown-toggle btn btn-success"
+                                                                data-toggle="dropdown">Action</a>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a href="{{ route('sowing-records.show', $record->id) }}"
+                                                                    class="dropdown-item has-icon">
+                                                                    <i class="far fa-eye text-info"></i> View
+                                                                </a>
+                                                                <a href="{{ route('sowing-records.edit', $record->id) }}"
+                                                                    class="dropdown-item has-icon">
+                                                                    <i class="far fa-edit text-success"></i> Edit
+                                                                </a>
+
+                                                                <form
+                                                                    action="{{ route('sowing-records.destroy', $record->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="dropdown-item has-icon"
+                                                                        onclick="return confirm('Are you sure you want to delete this record?');">
+                                                                        <i class="fas fa-trash text-danger"></i> Delete
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="mt-4">
+                                    {{ $viewData['sowing_records']->links() }}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
 @endsection

@@ -19,7 +19,7 @@ class FieldController extends Controller
     {
         $viewData = [];
         $viewData['title'] = 'List of Land Plots';
-        $viewData['fields'] = Field::with('farmer')->get(); // Retrieve all Leand Plots with their associated farmers
+        $viewData['fields'] = Field::with('farmer')->paginate(50); // Retrieve all Leand Plots with their associated farmers
 
         foreach ($viewData['fields'] as $farm) {
             $gpsData = $farm->gps_location;
@@ -27,10 +27,10 @@ class FieldController extends Controller
             if ($gpsData) {
                 // Retirer 'POLYGON((' et '))'
                 $cleanedData = str_replace(['POLYGON((', '))'], '', $gpsData);
-    
+
                 // Diviser les coordonnées en fonction des virgules
                 $points = explode(',', $cleanedData);
-    
+
                 $coordinates = [];
                 foreach ($points as $point) {
                     $latLng = explode(' ', trim($point));
@@ -38,8 +38,8 @@ class FieldController extends Controller
                         $coordinates[] = ['lat' => (float) $latLng[1], 'lng' => (float) $latLng[0]];
                     }
                 }
-    
-                
+
+
             } else {
             }
         }
@@ -61,7 +61,7 @@ class FieldController extends Controller
                 // Nettoyez la donnée en enlevant "POLYGON((" et "))"
                 $coordinatesString = str_replace(['POLYGON((', '))'], '', $field->gps_location);
                 $coordinatesPairs = explode(',', $coordinatesString);
-                
+
                 $formattedCoordinates = [];
                 foreach ($coordinatesPairs as $pair) {
                     list($lng, $lat) = explode(' ', trim($pair));
@@ -104,7 +104,7 @@ class FieldController extends Controller
         // Vérifiez si la décodage est correct et si chaque élément est bien un tableau
         if (is_array($coordinates) && count($coordinates) > 0 && is_array($coordinates[0])) {
             try {
-                $formattedCoordinates = array_map(function($coord) {
+                $formattedCoordinates = array_map(function ($coord) {
                     // Assurez-vous que chaque coordonnée est bien un tableau avec deux éléments (latitude et longitude)
                     if (is_array($coord) && count($coord) == 2) {
                         return implode(' ', $coord);
@@ -183,7 +183,7 @@ class FieldController extends Controller
         // Vérifiez si la décodage est correct et si chaque élément est bien un tableau
         if (is_array($coordinates) && count($coordinates) > 0 && is_array($coordinates[0])) {
             try {
-                $formattedCoordinates = array_map(function($coord) {
+                $formattedCoordinates = array_map(function ($coord) {
                     // Assurez-vous que chaque coordonnée est bien un tableau avec deux éléments (latitude et longitude)
                     if (is_array($coord) && count($coord) == 2) {
                         return implode(' ', $coord);
@@ -237,8 +237,8 @@ class FieldController extends Controller
         $viewData['title'] = 'List of Land Plots';
         $viewData['fields'] = Field::with('farmer')->get();
 
-        $pdf = Pdf::loadView('pdf.list_fields', array('fields' =>  $viewData['fields']))
-        ->setPaper('a4', 'portrait');
+        $pdf = Pdf::loadView('pdf.list_fields', array('fields' => $viewData['fields']))
+            ->setPaper('a4', 'portrait');
 
         return $pdf->stream();
     }
