@@ -142,7 +142,7 @@
                             <td>
                                 @if($farm->documents_upload)
                                     @foreach($farm->documents_upload as $document)
-                                        <a href="{{ asset('storage/app/public/' . $document['path']) }}" target="_blank">Document
+                                        <a href="{{ asset('storage/' . $document['path']) }}" target="_blank">Document
                                             {{ $loop->iteration }}</a><br>
                                     @endforeach
                                 @else

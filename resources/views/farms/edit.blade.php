@@ -168,7 +168,7 @@
                                         @if($farm->photo)
                                             <div class="mt-3">
                                                 <label>Current Photo:</label>
-                                                <img src="{{ asset('storage/app/public/' . $farm->photo) }}" alt="Farmer Photo"
+                                                <img src="{{ asset('storage/' . $farm->photo) }}" alt="Farmer Photo"
                                                     class="img-thumbnail" width="150">
                                             </div>
                                         @endif

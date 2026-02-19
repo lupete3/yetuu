@@ -128,9 +128,8 @@
                                                                     class="form-check-input remove-photo"
                                                                     data-photo-id="{{ $photo }}" id="remove-photo-{{ $index }}">
                                                                 <label class="form-check-label" for="remove-photo-{{ $index }}">
-                                                                    <a href="{{ asset('storage/app/public/' . $photo) }}"
-                                                                        target="_blank">
-                                                                        <img src="{{ asset('storage/app/public/' . $photo) }}"
+                                                                    <a href="{{ asset('storage/' . $photo) }}" target="_blank">
+                                                                        <img src="{{ asset('storage/' . $photo) }}"
                                                                             class="img-thumbnail" alt="Photo">
                                                                     </a>
                                                                 </label>

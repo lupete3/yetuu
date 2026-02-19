@@ -150,8 +150,7 @@
             <tr>
                 <th colspan="4" class="photo-section">
                     @if($farm->photo)
-                        <img src="{{ asset('storage/app/public/' . $farm->photo) }}" alt="Farm Photo"
-                            style="max-width: 100px;">
+                        <img src="{{ asset('storage/' . $farm->photo) }}" alt="Farm Photo" style="max-width: 100px;">
                     @else
                         <div class="photo-placeholder">PHOTO</div>
                     @endif

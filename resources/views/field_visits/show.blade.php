@@ -65,9 +65,9 @@
                                                 <div class="row">
                                                     @foreach(json_decode($fieldVisit->photos) as $photo)
                                                         <div class="col-md-3 mb-2">
-                                                            <a href="{{ asset('storage/app/public/' . $photo) }}" target="_blank">
-                                                                <img src="{{ asset('storage/app/public/' . $photo) }}"
-                                                                    class="img-thumbnail" alt="Photo">
+                                                            <a href="{{ asset('storage/' . $photo) }}" target="_blank">
+                                                                <img src="{{ asset('storage/' . $photo) }}" class="img-thumbnail"
+                                                                    alt="Photo">
                                                             </a>
                                                         </div>
                                                     @endforeach

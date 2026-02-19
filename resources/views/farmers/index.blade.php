@@ -79,7 +79,7 @@
                                                     <td>{{ $farmer->farmer_id }}</td> <!-- Affichage du farmer_id -->
                                                     <td>
                                                         @if($farmer->photo)
-                                                            <img src="{{ asset('storage/app/public/' . $farmer->photo) }}" alt="Farmer Photo" width="50">
+                                                            <img src="{{ asset('storage/' . $farmer->photo) }}" alt="Farmer Photo" width="50">
                                                         @else
                                                             Not defined
                                                         @endif

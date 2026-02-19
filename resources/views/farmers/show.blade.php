@@ -89,7 +89,7 @@
     <div class="section basic-info">
         <div class="photo">
             @if($farmer->photo)
-                <img src="{{ asset('storage/app/public/' . $farmer->photo) }}" alt="Farmer Photo" width="100px" >
+                <img src="{{ asset('storage/' . $farmer->photo) }}" alt="Farmer Photo" width="100px" >
             @else
                 <div class="photo-placeholder">PHOTO</div>
             @endif

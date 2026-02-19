@@ -85,7 +85,7 @@
                                                             <ul>
                                                                 @foreach ($farm->documents_upload as $document)
                                                                     <li>
-                                                                        <a href="{{ asset('storage/app/public/' . $document['path']) }}" target="_blank">{{ $document['filename'] }}</a>
+                                                                        <a href="{{ asset('storage/' . $document['path']) }}" target="_blank">{{ $document['filename'] }}</a>
                                                                     </li>
                                                                 @endforeach
                                                             </ul>

@@ -200,7 +200,8 @@
                                             @foreach ($viewData['accompaniments'] as $accompaniment)
 
                                                 <option value="{{ $accompaniment->id }}" {{ $farmer->accompaniement_id == $accompaniment->id ? 'selected' : '' }}>
-                                                    {{ $accompaniment->name }}</option>
+                                                    {{ $accompaniment->name }}
+                                                </option>
 
                                             @endforeach
                                         </select>
@@ -336,8 +337,8 @@
                                         @if($farmer->photo)
                                             <div class="mt-3">
                                                 <label>Current Photo:</label>
-                                                <img src="{{ asset('storage/app/public/' . $farmer->photo) }}"
-                                                    alt="Farmer Photo" class="img-thumbnail" width="150">
+                                                <img src="{{ asset('storage/' . $farmer->photo) }}" alt="Farmer Photo"
+                                                    class="img-thumbnail" width="150">
                                             </div>
                                         @endif
                                         @error('photo')

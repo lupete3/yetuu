@@ -100,8 +100,7 @@
     <div class="container">
         <div class="header">
             @if(isset($settings['logo']))
-                <img src="{{ asset('logos/' . $settings['logo']) }}" alt="{{ $settings['app_name'] }}"
-                    style="width: 20%;">
+                <img src="{{ asset('logos/' . $settings['logo']) }}" alt="{{ $settings['app_name'] }}" style="width: 20%;">
             @else
                 <p>LOGO</p>
             @endif
@@ -158,8 +157,8 @@
                 <td>
                     @if($crop->photo)
                         <div class="mt-3">
-                            <img src="{{ asset('storage/app/public/' . $crop->photo) }}" alt="Crop Photo"
-                                class="img-thumbnail" width="100">
+                            <img src="{{ asset('storage/' . $crop->photo) }}" alt="Crop Photo" class="img-thumbnail"
+                                width="100">
                         </div>
                     @endif
                 </td>
